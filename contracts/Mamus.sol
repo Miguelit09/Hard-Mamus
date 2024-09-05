@@ -24,7 +24,11 @@ contract Mamus is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Pausable, Ow
         _unpause();
     }
 
-    // Función para actualizar el tokenURI de un token específico
+    
+    function totalSupply() public view virtual override returns (uint256) {
+        return super.totalSupply();
+    }
+
     function updateTokenURI(uint256 tokenId, string memory newTokenURI) public onlyOwner {
         require(tokenId <= _nextTokenId, "Token no existente");
         _setTokenURI(tokenId, newTokenURI);
@@ -35,8 +39,6 @@ contract Mamus is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Pausable, Ow
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
-
-    // The following functions are overrides required by Solidity.
 
     function _update(address to, uint256 tokenId, address auth)
         internal

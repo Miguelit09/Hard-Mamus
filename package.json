@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2",
+    "ansi-styles": "^6.2.1",
     "glob": "^9.3.5",
     "inflight": "^1.0.6"
   },
