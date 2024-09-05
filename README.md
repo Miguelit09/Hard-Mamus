@@ -1,7 +1,5 @@
 # Hard-Mamus Project
 
-This project demonstrates the use of Hardhat for Ethereum smart contract development. It includes sample contracts, deployment scripts, and test configurations.
-
 ## Getting Started
 
 Follow these steps to set up and run the project:
@@ -33,33 +31,14 @@ To interact with the project, you can use the following npm scripts:
     npm run deploy
     ```
 
-## Usage
-
-Try running some of the following Hardhat tasks:
-
-- **Display Hardhat Help:**
+- **Mint Token:**
     ```bash
-    npx hardhat help
+    npm run mint
     ```
 
-- **Run Tests:**
+- **Verify Token:**
     ```bash
-    npx hardhat test
-    ```
-
-- **Report Gas Usage:**
-    ```bash
-    REPORT_GAS=true npx hardhat test
-    ```
-
-- **Start Hardhat Node:**
-    ```bash
-    npx hardhat node
-    ```
-
-- **Deploy Contracts:**
-    ```bash
-    npx hardhat run scripts/deploy.js
+    npm run verify
     ```
 
 ## Configuration

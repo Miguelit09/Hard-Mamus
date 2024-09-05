@@ -12,16 +12,6 @@ async function main() {
   //await mamus.deployTransaction.wait();
 
   console.log("Mamus deployed to:", await mamus.getAddress());
-
-  // Mintea un nuevo token con un URI de juguete
-  const toyURI = "ipfs://toy-uri";
-  await mamus.safeMint(owner.address, toyURI);
-
-  // Verifica el URI del token minteado
-  const uri = await mamus.tokenURI(0);
-  const totalSupply = await mamus.totalSupply();
-  console.log("TokenURI of the minted toy token:", uri);
-  console.log("Total Supply of tokens:", totalSupply.toString());
 }
 
 // Manejo de errores
