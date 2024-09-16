@@ -16,6 +16,11 @@ Follow these steps to set up and run the project:
     ```bash
     npm install
     ```
+3. **Set up Python virtual environment and install dependencies**
+  ```bash
+  python3 -m venv env
+  source env/bin/activate  # On Windows use env\Scripts\activate
+  ```
 
 ## Scripts
 
@@ -41,6 +46,21 @@ To interact with the project, you can use the following npm scripts:
     npm run verify
     ```
 
+- **Uvicorn**
+    ```bash
+     npm run start:uvicorn
+    ```
+
+4. **Example request to generate a certificate:**
+    ```bash
+    curl -X POST "http://127.0.0.1:8000/generar_imagen" \
+    -H "Content-Type: application/json" \
+    -d '{
+      "texto": "David Melo",
+      "cedula": "1093754037",
+      "descripcion": "For successfully completing the advanced programming course in Python and professional ethical hacking."
+    }'
+    ```
 ## Configuration
 
 ### Hardhat Configuration

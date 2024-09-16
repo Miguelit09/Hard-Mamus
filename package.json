@@ -7,7 +7,8 @@
     "start-node": "npx hardhat node",
     "deploy": "npx hardhat run scripts/deploy.js --network localhost",
     "mint": "npx hardhat run scripts/mint-token.js --network localhost", 
-    "verify": "npx hardhat run scripts/verify-token.js --network localhost"
+    "verify": "npx hardhat run scripts/verify-token.js --network localhost",
+    "start:uvicorn": "uvicorn app.main:app --reload"
   },
   "keywords": [],
   "author": "",
