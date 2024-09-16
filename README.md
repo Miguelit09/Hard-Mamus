@@ -61,6 +61,14 @@ To interact with the project, you can use the following npm scripts:
       "descripcion": "For successfully completing the advanced programming course in Python and professional ethical hacking."
     }'
     ```
+5. **Mint-Token:**
+4. **Example request to generate a certificate:**
+    ```bash
+      curl -X POST "http://127.0.0.1:8000/mint-token" \
+      -H "Content-Type: application/json" \
+      -d '{"contract_address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9", "token_uri": "http://127.0.0.1:8000/certificado/1093754037"}'
+    ```
+
 ## Configuration
 
 ### Hardhat Configuration

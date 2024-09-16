@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Request, HTTPException
 from datetime import datetime
-from ..models.models import CertificadoData, CertificadoModel
+from ..models.models import CertificadoData, CertificadoModel, MintTokenRequest
 from ..database.database import certificados_collection
 from ..utils.utils import generar_imagen_con_texto
+import subprocess
 import os
 
 router = APIRouter()
@@ -47,7 +48,7 @@ def generar_imagen_endpoint(datos: CertificadoData, request: Request):
                 "value": int(datetime.now().timestamp()),
             }
         ],
-        "fecha_creacion": int(datetime.now().timestamp())
+        "creation_date": int(datetime.now().timestamp())
     }
     
     # Insertar el certificado en mongomock
@@ -67,3 +68,30 @@ def obtener_certificado(cedula: str):
         return certificado
     else:
         raise HTTPException(status_code=404, detail="Certificado no encontrado")
+
+@router.post("/mint-token")
+async def mint_token(request: MintTokenRequest):
+    try:
+        # Extraer los datos del cuerpo de la solicitud
+        contract_address = request.contract_address
+        token_uri = request.token_uri
+
+        # Configurar las variables de entorno
+        os.environ['CONTRACT_ADDRESS'] = contract_address
+        os.environ['TOKEN_URI'] = token_uri
+
+        # Llamar al script de Hardhat con las variables de entorno configuradas
+        result = subprocess.run(
+            [
+                "npm", "run", "mint"
+            ],
+            capture_output=True, text=True
+        )
+
+        if result.returncode != 0:
+            raise HTTPException(status_code=500, detail=f"Error during minting: {result.stderr}")
+
+        return {"message": "Token minted successfully", "output": result.stdout}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

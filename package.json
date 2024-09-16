@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-node": "npx hardhat node",
     "deploy": "npx hardhat run scripts/deploy.js --network localhost",
-    "mint": "npx hardhat run scripts/mint-token.js --network localhost", 
+    "mint": "npx hardhat run scripts/mint-token.js --network localhost",
     "verify": "npx hardhat run scripts/verify-token.js --network localhost",
     "start:uvicorn": "uvicorn app.main:app --reload"
   },
@@ -18,11 +18,13 @@
     "@openzeppelin/contracts": "^5.0.2",
     "ansi-styles": "^6.2.1",
     "glob": "^9.3.5",
-    "inflight": "^1.0.6"
+    "inflight": "^1.0.6",
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "hardhat": "^2.22.10",
+    "tslib": "^2.7.0",
     "update": "^0.7.4"
   }
 }

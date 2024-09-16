@@ -28,12 +28,16 @@ class CertificadoModel(BaseModel):
     name: str = "Mamus NFT Certificate"
     developer: str = "CONEXALAB and JDOM1824"
     attributes: List[dict]
-    fecha_creacion: int
+    creation_date: int
 
     class Config:
         allow_population_by_field_name = True
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}
+
+class MintTokenRequest(BaseModel):
+    contract_address: str
+    token_uri: str
 
 # Modelo de datos de entrada
 class CertificadoData(BaseModel):
