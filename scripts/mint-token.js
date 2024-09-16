@@ -15,9 +15,9 @@ async function main() {
     const tx = await mamus.safeMint(owner.address, tokenURI);
     await tx.wait();
 
-    const uri = await mamus.tokenURI(0);
-    const totalSupply = await mamus.totalSupply();
     
+    const totalSupply = await mamus.totalSupply();
+    const uri = await mamus.tokenURI(totalSupply);
     console.log("TokenURI of the minted token:", uri);
     console.log("Total Supply of tokens:", totalSupply.toString());
 }

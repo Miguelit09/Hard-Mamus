@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, HTTPException
 from datetime import datetime
-from ..models.models import CertificadoData, CertificadoModel, MintTokenRequest
-from ..database.database import certificados_collection
+from ..models.models import CertificadoData, CertificadoModel, MintTokenRequest, VerifyTokenRequest
+from ..database.database import certificados_collection, get_next_certificate_number
 from ..utils.utils import generar_imagen_con_texto
 import subprocess
 import os
@@ -20,7 +20,7 @@ def generar_imagen_endpoint(datos: CertificadoData, request: Request):
     nombre_imagen = f"certificado_{datos.cedula}.png"
     ruta_imagen = os.path.join(RUTA_IMAGENES, nombre_imagen)
     imagen.save(ruta_imagen)
-    
+    next_number = get_next_certificate_number()
     # Construir la URL de la imagen
     base_url = str(request.base_url).rstrip("/")
     url_imagen = f"{base_url}/imagenes/{nombre_imagen}"
@@ -31,6 +31,7 @@ def generar_imagen_endpoint(datos: CertificadoData, request: Request):
         "cedula": datos.cedula,
         "descripcion": datos.descripcion,
         "image_url": url_imagen,
+        "number_certificate": next_number,
         "name": "Mamus NFT Certificate",
         "developer": "CONEXALAB and JDOM1824",
         "attributes": [
@@ -92,6 +93,34 @@ async def mint_token(request: MintTokenRequest):
             raise HTTPException(status_code=500, detail=f"Error during minting: {result.stderr}")
 
         return {"message": "Token minted successfully", "output": result.stdout}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/verify-token")
+async def verify_token(request: VerifyTokenRequest):
+    try:
+        # Extraer los datos del cuerpo de la solicitud
+        contract_address = request.contract_address
+        token_id = request.token_id
+
+        # Configurar las variables de entorno
+        os.environ['CONTRACT_ADDRESS'] = contract_address
+        os.environ['TOKEN_ID'] = str(token_id)
+
+        # Llamar al script de Hardhat con las variables de entorno configuradas
+        result = subprocess.run(
+            [
+                "npm", "run", "verify"
+            ],
+            capture_output=True, text=True
+        )
+
+        if result.returncode != 0:
+            raise HTTPException(status_code=500, detail=f"Error during verification: {result.stderr}")
+
+        return {"message": "Token verification completed successfully", "output": result.stdout}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

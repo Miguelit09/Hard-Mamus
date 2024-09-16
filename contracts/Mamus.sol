@@ -14,7 +14,9 @@ contract Mamus is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Pausable, Ow
     constructor(address initialOwner)
         ERC721("Mamus", "Mu")
         Ownable(initialOwner)
-    {}
+    {
+        _nextTokenId = 1;
+    }
 
     function pause() public onlyOwner {
         _pause();

@@ -25,6 +25,7 @@ class CertificadoModel(BaseModel):
     cedula: str
     descripcion: str
     image_url: str
+    number_certificate: int
     name: str = "Mamus NFT Certificate"
     developer: str = "CONEXALAB and JDOM1824"
     attributes: List[dict]
@@ -44,3 +45,7 @@ class CertificadoData(BaseModel):
     texto: str
     cedula: str
     descripcion: str
+
+class VerifyTokenRequest(BaseModel):
+    contract_address: str
+    token_id: int

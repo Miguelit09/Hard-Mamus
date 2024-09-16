@@ -1,34 +1,14 @@
 const hre = require("hardhat");
-const readline = require("readline");
-
-// Crear una interfaz de readline para la entrada de la consola
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
 
 async function main() {
-    // Obtener la dirección del contrato desde la consola
-    const getContractAddress = () => {
-        return new Promise((resolve) => {
-            rl.question('Ingrese la dirección del contrato desplegado: ', (address) => {
-                resolve(address);
-            });
-        });
-    };
+    // Obtener la dirección del contrato y el ID del token desde las variables de entorno
+    const contractAddress = process.env.CONTRACT_ADDRESS;
+    const tokenId = process.env.TOKEN_ID;
 
-    // Obtener el ID del token desde la consola
-    const getTokenId = () => {
-        return new Promise((resolve) => {
-            rl.question('Ingrese el ID del token que desea verificar: ', (id) => {
-                resolve(id);
-            });
-        });
-    };
-
-    const contractAddress = await getContractAddress();
-    const tokenId = await getTokenId();
-    rl.close();
+    if (!contractAddress || !tokenId) {
+        console.error('Las variables de entorno CONTRACT_ADDRESS y TOKEN_ID deben estar definidas');
+        process.exit(1);
+    }
 
     // Obtener la fábrica del contrato
     const Mamus = await hre.ethers.getContractFactory("Mamus");
