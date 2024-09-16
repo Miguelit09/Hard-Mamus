@@ -19,14 +19,14 @@ Follow these steps to set up and run the project:
 3. **Set up Python virtual environment and install dependencies**
   ```bash
   python3 -m venv env
-  source env/bin/activate  # On Windows use env\Scripts\activate
+  source env/bin/activate 
   ```
 
 ## Scripts
 
 To interact with the project, you can use the following npm scripts:
 
-- **Start Hardhat Node:**
+- **Start Hardhat Node:**  
     ```bash
     npm run start-node
     ```
@@ -34,11 +34,6 @@ To interact with the project, you can use the following npm scripts:
 - **Deploy Contract:**
     ```bash
     npm run deploy
-    ```
-
-- **Mint Token:**
-    ```bash
-    npm run mint
     ```
 
 - **Verify Token:**
