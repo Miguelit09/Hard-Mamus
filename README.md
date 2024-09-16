@@ -62,7 +62,6 @@ To interact with the project, you can use the following npm scripts:
     }'
     ```
 5. **Mint-Token:**
-4. **Example request to generate a certificate:**
     ```bash
       curl -X POST "http://127.0.0.1:8000/mint-token" \
       -H "Content-Type: application/json" \
