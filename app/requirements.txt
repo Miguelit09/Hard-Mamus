@@ -10,7 +10,7 @@ mongomock==4.2.0.post1
 motor==3.5.1
 packaging==24.1
 pillow==10.4.0
-pydantic==1.10.12
+pydantic==1.10.13
 pydantic_core==2.23.3
 pymongo==4.8.0
 python-dotenv==1.0.1
