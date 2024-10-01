@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, HTTPException
 from datetime import datetime
-from ..models.models import CertificadoData, CertificadoModel, MintTokenRequest, VerifyTokenRequest
+from ..models.models import CertificadoData, CertificadoModel, MintTokenRequest, VerifyTokenRequest, CedulasListResponse
 from ..database.database import certificados_collection, get_next_certificate_number
 from ..utils.utils import generar_imagen_con_texto
 import subprocess
@@ -13,6 +13,11 @@ RUTA_IMAGENES = "imagenes_generadas"
 
 @router.post("/generar_imagen", response_model=CertificadoModel)
 def generar_imagen_endpoint(datos: CertificadoData, request: Request):
+    # Verificar si la cédula ya tiene un certificado
+    certificado_existente = certificados_collection.find_one({"cedula": datos.cedula})
+    if certificado_existente:
+        raise HTTPException(status_code=400, detail="El certificado para esta cédula ya existe.")
+
     # Generar la imagen con el texto
     imagen = generar_imagen_con_texto(datos.texto, datos.cedula, datos.descripcion)
     
@@ -121,6 +126,22 @@ async def verify_token(request: VerifyTokenRequest):
             raise HTTPException(status_code=500, detail=f"Error during verification: {result.stderr}")
 
         return {"message": "Token verification completed successfully", "output": result.stdout}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+
+@router.get("/certificados/", response_model=CedulasListResponse)
+def obtener_cedulas_certificados():
+    try:
+        # Usamos `find()` para obtener solo el campo "cedula" de cada documento
+        certificados = certificados_collection.find({}, {"cedula": 1, "_id": 0})
+        
+        # Extraemos las cédulas de los resultados
+        cedulas = [certificado["cedula"] for certificado in certificados]
+
+        # Retornamos la lista de cédulas utilizando el modelo `CedulasListResponse`
+        return CedulasListResponse(cedulas=cedulas)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

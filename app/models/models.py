@@ -40,7 +40,6 @@ class MintTokenRequest(BaseModel):
     contract_address: str
     token_uri: str
 
-# Modelo de datos de entrada
 class CertificadoData(BaseModel):
     texto: str
     cedula: str
@@ -49,3 +48,7 @@ class CertificadoData(BaseModel):
 class VerifyTokenRequest(BaseModel):
     contract_address: str
     token_id: int
+
+class CedulasListResponse(BaseModel):
+    cedulas: List[str]
+
