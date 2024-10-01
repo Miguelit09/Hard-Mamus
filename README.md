@@ -67,7 +67,7 @@ To interact with the project, you can use the following npm scripts:
 5. **List-Cedulas:**
     ```bash
     curl -X 'GET' \
-    'http://127.0.0.1:8000/certificados/' \
+    'http://127.0.0.1:8000/allcertificados/' \
     -H 'accept: application/json'
     ```
 

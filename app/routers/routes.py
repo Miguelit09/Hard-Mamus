@@ -131,7 +131,7 @@ async def verify_token(request: VerifyTokenRequest):
         raise HTTPException(status_code=500, detail=str(e))
     
 
-@router.get("/certificados/", response_model=CedulasListResponse)
+@router.get("/allcertificados/", response_model=CedulasListResponse)
 def obtener_cedulas_certificados():
     try:
         # Usamos `find()` para obtener solo el campo "cedula" de cada documento
