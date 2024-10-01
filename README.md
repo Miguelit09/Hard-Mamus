@@ -64,6 +64,13 @@ To interact with the project, you can use the following npm scripts:
     -d '{"contract_address": "0x5FbDB2315678afecb367f032d93F642f64180aa3", "token_id": 1}'
     ```
 
+5. **List-Cedulas:**
+    ```bash
+    curl -X 'GET' \
+    'http://127.0.0.1:8000/certificados/' \
+    -H 'accept: application/json'
+    ```
+
 ## Configuration
 
 ### Hardhat Configuration
