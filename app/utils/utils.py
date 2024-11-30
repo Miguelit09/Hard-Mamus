@@ -47,7 +47,13 @@ def generar_imagen_con_texto(texto, cedula, descripcion):
         fuente_descripcion = ImageFont.load_default()
 
     # Calcular la posición del texto
-    bbox_texto = draw.textbbox((0, 0), texto, font=fuente_principal)
+    if isinstance(fuente_principal, ImageFont.FreeTypeFont):
+        bbox_texto = draw.textbbox((0, 0), texto, font=fuente_principal)
+    else:
+        ancho_texto = len(texto) * 10  # Aproximación: 10px por carácter
+        alto_texto = 20  # Aproximación: altura de línea
+        bbox_texto = (0, 0, ancho_texto, alto_texto)
+
     ancho_texto = bbox_texto[2] - bbox_texto[0]
     alto_texto = bbox_texto[3] - bbox_texto[1]
     x_texto = (ancho - ancho_texto) / 2
