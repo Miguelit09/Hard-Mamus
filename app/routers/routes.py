@@ -18,9 +18,22 @@ def generar_imagen_endpoint(datos: CertificadoData, request: Request):
     if certificado_existente:
         raise HTTPException(status_code=400, detail="El certificado para esta cédula ya existe.")
 
-    # Generar la imagen con el texto
-    imagen = generar_imagen_con_texto(datos.texto, datos.cedula, datos.descripcion)
+    # Obtener la ruta de la imagen base
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    ruta_imagen_base = os.path.join(BASE_DIR, "static", "images", "certificado-mamus.png")
+
+    if not os.path.exists(ruta_imagen_base):
+        raise HTTPException(status_code=500, detail="La imagen base no existe.")
+
+    #Uso en la función generar_imagen_con_texto
+    try:
+        imagen = generar_imagen_con_texto(ruta_imagen_base, datos.texto, datos.cedula, datos.descripcion)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error generando la imagen: {str(e)}")
     
+    if not os.path.exists(RUTA_IMAGENES):
+        os.makedirs(RUTA_IMAGENES)
+
     # Guardar la imagen en un archivo
     nombre_imagen = f"certificado_{datos.cedula}.png"
     ruta_imagen = os.path.join(RUTA_IMAGENES, nombre_imagen)
