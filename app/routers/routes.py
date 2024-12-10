@@ -10,6 +10,7 @@ router = APIRouter()
 
 # Ruta para almacenar las imágenes generadas
 RUTA_IMAGENES = "imagenes_generadas"
+URL_BASE = "/imagenes_generadas"
 
 @router.post("/generar_imagen", response_model=CertificadoModel)
 def generar_imagen_endpoint(datos: CertificadoData, request: Request):
@@ -41,7 +42,7 @@ def generar_imagen_endpoint(datos: CertificadoData, request: Request):
     next_number = get_next_certificate_number()
     # Construir la URL de la imagen
     base_url = str(request.base_url).rstrip("/")
-    url_imagen = f"{base_url}/imagenes/{nombre_imagen}"
+    url_imagen = f"{base_url}{URL_BASE}/{nombre_imagen}"
     
     # Crear los datos del certificado
     data_certificado = {

@@ -12,7 +12,7 @@ if not os.path.exists(RUTA_IMAGENES):
     os.makedirs(RUTA_IMAGENES)
 
 # Montar la carpeta de imágenes para servir archivos estáticos
-app.mount("/imagenes", StaticFiles(directory=RUTA_IMAGENES), name="imagenes")
+app.mount("/imagenes_generadas", StaticFiles(directory=RUTA_IMAGENES), name="imagenes_generadas")
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 # Incluir las rutas del módulo 'routes'
