@@ -3,7 +3,7 @@ services:
     image: nginx:latest
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/web.conf
-      - ./app/templates:/usr/share/nginx/html
+      - ./app/public:/usr/share/nginx/html
     ports:
       - "3000:3000"
     depends_on:
@@ -17,7 +17,12 @@ services:
 
   uvicorn:
     build:
-      context: ./app
+      context: ./src/app
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
-      - ./app:/app
+      - ./src/app:/app
+
+  procedures: 
+    image: node:lts
+    command: npm install && npm run server
+
