@@ -3,24 +3,17 @@ services:
     image: nginx:latest
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/web.conf
-      - ./app/public:/usr/share/nginx/html
+      - ./src/views:/usr/share/nginx/html
     ports:
       - "3000:3000"
     depends_on:
       - php_fpm
-      - uvicorn
+
 
   php_fpm:
     image: php:7.4-fpm
     volumes:
-      - ./app/templates:/usr/share/nginx/html
-
-  uvicorn:
-    build:
-      context: ./src/app
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-    volumes:
-      - ./src/app:/app
+      - ./src/views:/usr/share/nginx/html
 
   procedures: 
     image: node:lts
